@@ -13,11 +13,9 @@ describe('Appium Testing', () => {
         driver.pause(3000);
         driver.pressKeyCode(27);
 
-        driver.pause(3000);
+        driver.pause(5000);
         driver.pressKeyCode(61);
-        driver.pause(1000);
-        driver.pressKeyCode(61);
-        driver.pause(1000);
+        driver.pause(5000);
         driver.pressKeyCode(108);
 
         const status = $("~btntype").getText();
@@ -29,20 +27,14 @@ describe('Appium Testing', () => {
         const contents = fs.readFileSync('./images/AI.jpg', { encoding: 'base64' });
         driver.pushFile("/mnt/sdcard/Pictures/test.jpg", contents)
 
-        driver.pause(3000);
+        driver.pause(5000);
         
         $("~btnGallery").click();
 
-        driver.pause(3000);
-        driver.pressKeyCode(61);
-        driver.pause(1000);
-        driver.pressKeyCode(108);
+        driver.pause(5000);
+        driver.touchAction([{ action: 'press', x: 200, y: 1200 }, 'release']);  // Special for Galaxy S10
 
-        driver.pause(3000);
-        driver.pressKeyCode(61);
-        driver.pause(1000);
-        driver.pressKeyCode(108);
-
+        driver.pause(5000);
         const status = $("~btntype").getText();
         expect(status).to.equal("gallery");
     });
@@ -50,20 +42,10 @@ describe('Appium Testing', () => {
     it('File from Document-Picker Test', async => {
         $("~btnDocument").click();
 
-        let winRect = driver.getWindowRect();
-
-        driver.pause(3000);
-        driver.touchAction([{ action: 'press', x: winRect.width * 0.75, y: 400 }, 'release']);
-        driver.pause(1000);
-        driver.pressKeyCode(61);
-        driver.pause(1000);
-        driver.pressKeyCode(108);
-
-        driver.pause(3000);
-        driver.pressKeyCode(61);
-        driver.pause(1000);
-        driver.pressKeyCode(108);
-
+        driver.pause(7000);
+        driver.touchAction([{ action: 'press', x: 286, y: 1257 }, 'release']);  // Special for Galaxy S10
+        driver.pause(5000);
+        
         const status = $("~btntype").getText();
         expect(status).to.equal("document");
     });

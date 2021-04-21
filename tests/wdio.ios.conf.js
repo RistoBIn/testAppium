@@ -1,5 +1,4 @@
 exports.config = {
-    appium: { command: 'appium' },
     //
     // ====================
     // Runner Configuration
@@ -8,6 +7,22 @@ exports.config = {
     // WebdriverIO allows it to run your tests in arbitrary locations (e.g. locally or
     // on a remote machine).
     runner: 'local',
+    //
+    // =================
+    // Service Providers
+    // =================
+    // WebdriverIO supports Sauce Labs, Browserstack, Testing Bot and LambdaTest (other cloud providers
+    // should work too though). These services define specific user and key (or access key)
+    // values you need to put in here in order to connect to these services.
+    //
+    user: process.env.SAUCE_USERNAME,
+    key: process.env.SAUCE_ACCESS_KEY,
+    //
+    // If you run your tests on Sauce Labs you can specify the region you want to run your tests
+    // in via the `region` property. Available short handles for regions are `us` (default) and `eu`.
+    // These regions are used for the Sauce Labs VM cloud and the Sauce Labs Real Device Cloud.
+    // If you don't provide the region it will default for the `us`
+    region: 'eu',
     //
     // ==================
     // Specify Test Files
@@ -55,20 +70,13 @@ exports.config = {
     //
     capabilities: [{
         maxInstances: 1,
-        browserName: '',
-        appiumVersion: '1.20.2',
         platformName: 'iOS',
-        platformVersion: '14.4',
         deviceName: 'iPhone 11',
-        app: 'app-path in local',
+        platformVersion: '14.4.2',
         automationName: 'XCUITest',
-
-        // this info is for real device.
-        // bundleId: "app-bundleId",
-        // xcodeOrgId: "BFRU5AB577",
-        // xcodeSigningId: "ios developer",
-        // udid: "200ffec908e77883c8ec0ae5e27f81b36141fbe5"
-     }],
+        app: 'storage:10c91915-6075-415a-bb8b-16eea177a617',
+        'browserstack.uploadMedia': ['media://21d66a8a0471097bbf5789330129e9ab97e467e3']
+    }],
     //
     // ===================
     // Test Configurations
@@ -100,8 +108,7 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'http://localhost',
-    path: "/wd/hub",
+    baseUrl: 'https://ondemand.us-west-1.saucelabs.com',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -119,8 +126,6 @@ exports.config = {
     // commands. Instead, they hook themselves up into the test process.
     services: ['appium'],
 
-    port: 4723,
-    
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
     // see also: https://webdriver.io/docs/frameworks
@@ -144,7 +149,7 @@ exports.config = {
     reporters: ['spec'],
 
 
-    
+
     //
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
