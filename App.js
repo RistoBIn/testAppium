@@ -10,10 +10,16 @@ const Gap = ({ height }) => (
 const App = () => {
     const [url, setUrl] = useState("");
     const [file, setFile] = useState(null);
-    const [type, setType] = useState("")
+    const [type, setType] = useState("");
+
+    const preAction = () => {
+        setUrl("");
+        setType("");
+        setFile(null)
+    }
 
     const onCamera = () => {
-        setType("");
+        preAction();
         launchCamera({
             mediaType: 'photo',
         }, (response) => {
@@ -25,7 +31,7 @@ const App = () => {
     }
 
     const onGallery = () => {
-        setType("");
+        preAction();
         launchImageLibrary({
             mediaType: 'photo'
         }, (response) => {
@@ -38,9 +44,9 @@ const App = () => {
 
     const onDocumentPicker = async () => {
         try {
-            setType("");
+            preAction();
             const res = await DocumentPicker.pick({
-                type: [DocumentPicker.types.images],
+                type: [DocumentPicker.types.allFiles],
             });
 
             setType("document");
@@ -59,14 +65,6 @@ const App = () => {
             }
         }
     }
-
-    useEffect(() => {
-        setFile(null);
-    }, [url]);
-
-    useEffect(() => {
-        setUrl(null);
-    }, [file])
 
     return (
         <View style={{ flex: 1, paddingTop: 50, backgroundColor: 'white' }} accessibilityLabel="app-root">
@@ -97,6 +95,7 @@ const App = () => {
                     url ? (
                         <Image
                             accessibilityLabel="imageview"
+                            accessible={true}
                             source={{ uri: url }}
                             style={{ width: '100%', flex: 1 }}
                         />
@@ -105,7 +104,7 @@ const App = () => {
 
                 {
                     file ? (
-                        <View style={{ width: 250 }}>
+                        <View style={{ width: 250 }} accessibilityLabel="fileView" accessible={true}>
                             <Text>{JSON.stringify(file)}</Text>
                         </View>
                     ) : null
